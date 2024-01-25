@@ -7,6 +7,10 @@
         <option value="$PROJECT_DIR$/back/pom.xml" />
         <option value="$PROJECT_DIR$/interface/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-back/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-patientui/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
