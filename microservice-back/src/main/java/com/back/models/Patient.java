@@ -1,18 +1,25 @@
 package com.back.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 
+@Entity
 public class Patient {
 
+    @Id
+    @GeneratedValue
     private Integer id;
     private String firstName;
     private String lastName;
-    private LocalDate birthdate;
+    private String birthdate;
     private String gender;
     private String address;
     private String phoneNumber;
 
-    public Patient(Integer id, String firstName, String lastName, LocalDate birthdate, String gender, String address, String phoneNumber) {
+    public Patient(Integer id, String firstName, String lastName, String birthdate, String gender, String address, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,6 +27,9 @@ public class Patient {
         this.gender = gender;
         this.address = address;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Patient() {
     }
 
     public Integer getId() {
@@ -46,11 +56,11 @@ public class Patient {
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
