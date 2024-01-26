@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: back_route
+          uri: http://localhost:9002/
+          predicates:
+          - Path=/**
+        - id: patientui_route
+          uri: http://localhost:9001/
+          predicates:
+          - Path=/patient/**
