@@ -27,7 +27,7 @@ public class BackController {
     }
 
     @PostMapping("/back/add/validate")
-    public Patient addPatientValidate(@RequestBody Patient patient) {
+    public Patient addPatientValidate(Patient patient) {
         return patientService.addPatient(patient);
     }
 }

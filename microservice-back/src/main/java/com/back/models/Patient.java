@@ -1,9 +1,11 @@
 package com.back.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -13,14 +15,26 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank(message = "First Nname is mandatory")
+    @Size(min = 2, message = "2 characters min.")
+    @Size(max = 50, message = "50 characters max.")
+    @Column(name = "first_name")
     private String firstName;
+    @NotBlank(message = "Last Nname is mandatory")
+    @Size(min = 2, message = "2 characters min.")
+    @Size(max = 50, message = "50 characters max.")
+    @Column(name ="last_name")
     private String lastName;
-    private String birthdate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotEmpty(message = "Birthdate is mandatory")
+    private LocalDate birthdate;
+    @NotBlank(message = "Gender is mandatory")
     private String gender;
     private String address;
     private String phoneNumber;
 
-    public Patient(Integer id, String firstName, String lastName, String birthdate, String gender, String address, String phoneNumber) {
+    public Patient(Integer id, String firstName, String lastName, LocalDate birthdate, String gender, String address, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -57,11 +71,11 @@ public class Patient {
         this.lastName = lastName;
     }
 
-    public String getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 

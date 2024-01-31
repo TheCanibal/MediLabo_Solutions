@@ -19,5 +19,5 @@ public interface MicroserviceBackProxy {
     PatientBean showOnePatientInformations(@PathVariable Integer id);
 
     @PostMapping("/back/add/validate")
-    PatientBean addPatientValidate(@RequestBody PatientBean patient);
+    PatientBean addPatientValidate(PatientBean patient);
 }

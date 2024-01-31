@@ -26,13 +26,13 @@ public class PatientController {
     }
 
     @GetMapping("/add")
-    public String addPatientPage(PatientBean patient, Model model) {
-        model.addAttribute("patient", patient);
+    public String addPatientPage(Model model) {
+        model.addAttribute("patient", new PatientBean());
         return "patient/add";
     }
 
     @PostMapping("/add/validate")
-    public String addPatientValidation(PatientBean patient, BindingResult result) {
+    public String addPatientValidation(@Valid @ModelAttribute("patient") PatientBean patient, BindingResult result, Model model) {
         if(result.hasErrors()) {
             return "patient/add";
         }
