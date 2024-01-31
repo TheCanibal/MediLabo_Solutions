@@ -2,11 +2,11 @@ package com.patientui.controllers;
 
 import com.patientui.beans.PatientBean;
 import com.patientui.proxies.MicroserviceBackProxy;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,11 +25,19 @@ public class PatientController {
         return "patient/list";
     }
 
-    @GetMapping("/{id}")
-    public String patientInformation(@PathVariable Integer id, Model model) {
-        PatientBean patient = backProxy.showOnePatientInformations(id);
+    @GetMapping("/add")
+    public String addPatientPage(PatientBean patient, Model model) {
         model.addAttribute("patient", patient);
-        return "patient/list";
+        return "patient/add";
+    }
+
+    @PostMapping("/add/validate")
+    public String addPatientValidation(PatientBean patient, BindingResult result) {
+        if(result.hasErrors()) {
+            return "patient/add";
+        }
+        backProxy.addPatientValidate(patient);
+        return "redirect:/patient/list";
     }
 
 }
