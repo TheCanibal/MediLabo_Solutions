@@ -18,12 +18,10 @@ public class Patient {
     @NotBlank(message = "First Nname is mandatory")
     @Size(min = 2, message = "2 characters min.")
     @Size(max = 50, message = "50 characters max.")
-    @Column(name = "first_name")
     private String firstName;
     @NotBlank(message = "Last Nname is mandatory")
     @Size(min = 2, message = "2 characters min.")
     @Size(max = 50, message = "50 characters max.")
-    @Column(name ="last_name")
     private String lastName;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")

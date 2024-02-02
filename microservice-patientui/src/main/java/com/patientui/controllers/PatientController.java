@@ -19,24 +19,40 @@ public class PatientController {
     public PatientController(MicroserviceBackProxy backProxy) {this.backProxy = backProxy;}
 
     @GetMapping("/list")
-    public String patientsList(Model model) {
+    public String showPatientsList(Model model) {
         List<PatientBean> patients = backProxy.showAllPatients();
         model.addAttribute("patients", patients);
         return "patient/list";
     }
 
     @GetMapping("/add")
-    public String addPatientPage(Model model) {
-        model.addAttribute("patient", new PatientBean());
+    public String showAddPatientPage(PatientBean patient, Model model) {
+        model.addAttribute("patient", patient);
         return "patient/add";
     }
 
     @PostMapping("/add/validate")
-    public String addPatientValidation(@Valid @ModelAttribute("patient") PatientBean patient, BindingResult result, Model model) {
+    public String addPatientValidation(@Valid @ModelAttribute("patient") PatientBean patient, BindingResult result) {
         if(result.hasErrors()) {
             return "patient/add";
         }
         backProxy.addPatientValidate(patient);
+        return "redirect:/patient/list";
+    }
+
+    @GetMapping("/update/{id}")
+    public String showUpdatePatientPage(@PathVariable("id") Integer id, Model model) {
+        PatientBean patient = backProxy.showOnePatientInformations(id);
+        model.addAttribute("patient", patient);
+        return "patient/update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updatePatientValidation(@PathVariable Integer id, @Valid PatientBean patient, BindingResult result) {
+        if(result.hasErrors()) {
+            return "patient/update";
+        }
+        backProxy.updatePatientValidate(id, patient);
         return "redirect:/patient/list";
     }
 

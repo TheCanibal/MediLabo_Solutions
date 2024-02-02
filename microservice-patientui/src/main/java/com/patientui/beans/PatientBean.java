@@ -2,6 +2,8 @@ package com.patientui.beans;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,6 +22,7 @@ public class PatientBean {
     private String lastName;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Birthdate is mandatory")
     private LocalDate birthdate;
     @NotBlank(message = "Gender is mandatory")
     private String gender;
