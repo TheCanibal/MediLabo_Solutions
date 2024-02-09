@@ -25,6 +25,13 @@ public class PatientController {
         return "patient/list";
     }
 
+    @GetMapping("/information/{id}")
+    public String showPatientInformation(@PathVariable("id") Integer id, Model model) {
+        PatientBean patient = backProxy.showOnePatientInformations(id);
+        model.addAttribute("patient", patient);
+        return "patient/information";
+    }
+
     @GetMapping("/add")
     public String showAddPatientPage(PatientBean patient, Model model) {
         model.addAttribute("patient", patient);
