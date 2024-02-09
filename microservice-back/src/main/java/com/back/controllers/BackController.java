@@ -1,6 +1,7 @@
 package com.back.controllers;
 
 import com.back.models.Patient;
+import com.back.models.PatientNotes;
 import com.back.services.PatientService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,11 @@ public class BackController {
     @GetMapping("/back/{id}")
     public Optional<Patient> showOnePatientInformations(@PathVariable Integer id) {
         return patientService.getPatientById(id);
+    }
+
+    @GetMapping("/back/{patId}/notes")
+    public List<PatientNotes> showPatientNotes(@PathVariable Integer patId) {
+        return patientService.getPatientNotesByPatId(patId);
     }
 
     @PostMapping("/back/add/validate")

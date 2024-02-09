@@ -1,6 +1,7 @@
 package com.patientui.controllers;
 
 import com.patientui.beans.PatientBean;
+import com.patientui.beans.PatientNotesBean;
 import com.patientui.proxies.MicroserviceBackProxy;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,9 @@ public class PatientController {
     @GetMapping("/information/{id}")
     public String showPatientInformation(@PathVariable("id") Integer id, Model model) {
         PatientBean patient = backProxy.showOnePatientInformations(id);
+        List<PatientNotesBean> patientNotes = backProxy.showPatientNotes(id);
         model.addAttribute("patient", patient);
+        model.addAttribute("patientNotes", patientNotes);
         return "patient/information";
     }
 

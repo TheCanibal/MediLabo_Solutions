@@ -1,9 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Patient Information</title>
-    <link rel="stylesheet" href="http://localhost:9001/webjars/bootstrap/5.3.0/css/bootstrap.min.css" th:href="@{http://localhost:9001/webjars/bootstrap/5.3.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="http://localhost:9001/webjars/bootstrap/5.3.0/css/bootstrap.min.css"
+          th:href="@{http://localhost:9001/webjars/bootstrap/5.3.0/css/bootstrap.min.css}"/>
 </head>
 <body>
 
@@ -13,7 +14,7 @@
     <h1 class="text-center">Patient Informations and History</h1>
 
     <div class="row">
-        <div class="col-md-4 mx-auto mt-5 text-center">
+        <div class="col-md-6 mx-auto mt-5 text-center">
 
             <p class="fw-bold">First Name : <span th:text="${patient.firstName}" class="fw-normal"></span></p>
 
@@ -21,11 +22,26 @@
 
             <p class="fw-bold">Birthdate : <span th:text="${patient.birthdate}" class="fw-normal"></span></p>
 
-            <p class="fw-bold">Gender :  <span th:text="${patient.gender}" class="fw-normal"></span></p>
+            <p class="fw-bold">Gender : <span th:text="${patient.gender}" class="fw-normal"></span></p>
 
             <p class="fw-bold">Address : <span th:text="${patient.address}" class="fw-normal"></span></p>
 
             <p class="fw-bold">Phone Number : <span th:text="${patient.phoneNumber}" class="fw-normal"></span></p>
+
+            <div class="col-md-12 mx-auto mt-5 text-center">
+                <table class="table table-bordered overflow-auto">
+                    <thead>
+                    <tr>
+                        <th>Notes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="patientNote : ${patientNotes}">
+                        <td th:text="${patientNote.note}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="col-sm-12">
                 <a class="btn btn-danger btn-sm" href="/patient/list">Back to List</a>

@@ -1,6 +1,7 @@
 package com.patientui.proxies;
 
 import com.patientui.beans.PatientBean;
+import com.patientui.beans.PatientNotesBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ public interface MicroserviceBackProxy {
 
     @GetMapping("/back/{id}")
     PatientBean showOnePatientInformations(@PathVariable Integer id);
+
+    @GetMapping("/back/{patId}/notes")
+    List<PatientNotesBean> showPatientNotes(@PathVariable Integer patId);
 
     @PostMapping("/back/add/validate")
     PatientBean addPatientValidate(@RequestBody PatientBean patient);

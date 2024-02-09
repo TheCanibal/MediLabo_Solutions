@@ -1,7 +1,9 @@
 package com.back.services;
 
 import com.back.models.Patient;
-import com.back.repositories.PatientRepository;
+import com.back.models.PatientNotes;
+import com.back.repositories.PatientRepositoryJPA;
+import com.back.repositories.PatientRepositoryMongoDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +13,28 @@ import java.util.Optional;
 public class PatientService {
 
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientRepositoryJPA patientRepositoryJPA;
+
+    @Autowired
+    private PatientRepositoryMongoDB patientRepositoryMongoDB;
 
     public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
+        return patientRepositoryJPA.findAll();
     }
 
     public Optional<Patient> getPatientById(Integer id) {
-        return patientRepository.findById(id);
+        return patientRepositoryJPA.findById(id);
     }
 
     public Patient addPatient(Patient patient) {
-        return patientRepository.save(patient);
+        return patientRepositoryJPA.save(patient);
     }
 
     public Patient updatePatient(Patient patient) {
-        return patientRepository.save(patient);
+        return patientRepositoryJPA.save(patient);
+    }
+
+    public List<PatientNotes> getPatientNotesByPatId(Integer patId) {
+        return patientRepositoryMongoDB.findByPatId(patId);
     }
 }
