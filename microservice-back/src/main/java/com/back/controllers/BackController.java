@@ -42,6 +42,7 @@ public class BackController {
 
     @PostMapping("/back/addNote")
     public PatientNotes addNoteForPatient(@RequestBody PatientNotes patientNote) {
+        System.out.println(patientNote.getPatId() + " " + patientNote.getNote());
         return patientService.addPatientNote(patientNote);
     }
 }

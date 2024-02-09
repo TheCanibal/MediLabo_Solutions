@@ -16,17 +16,17 @@
     <div class="row">
         <div class="col-md-6 mx-auto mt-5 text-center">
 
-            <p class="fw-bold">First Name : <span th:text="${patient.firstName}" class="fw-normal"></span></p>
+            <p class="fw-bold">First Name : <span th:text="${patientInfo.firstName}" class="fw-normal"></span></p>
 
-            <p class="fw-bold">Last Name : <span th:text="${patient.lastName}" class="fw-normal"></span></p>
+            <p class="fw-bold">Last Name : <span th:text="${patientInfo.lastName}" class="fw-normal"></span></p>
 
-            <p class="fw-bold">Birthdate : <span th:text="${patient.birthdate}" class="fw-normal"></span></p>
+            <p class="fw-bold">Birthdate : <span th:text="${patientInfo.birthdate}" class="fw-normal"></span></p>
 
-            <p class="fw-bold">Gender : <span th:text="${patient.gender}" class="fw-normal"></span></p>
+            <p class="fw-bold">Gender : <span th:text="${patientInfo.gender}" class="fw-normal"></span></p>
 
-            <p class="fw-bold">Address : <span th:text="${patient.address}" class="fw-normal"></span></p>
+            <p class="fw-bold">Address : <span th:text="${patientInfo.address}" class="fw-normal"></span></p>
 
-            <p class="fw-bold">Phone Number : <span th:text="${patient.phoneNumber}" class="fw-normal"></span></p>
+            <p class="fw-bold">Phone Number : <span th:text="${patientInfo.phoneNumber}" class="fw-normal"></span></p>
 
             <div class="col-md-12 mx-auto mt-5 text-center h-auto overflow-auto">
                 <table class="table table-bordered">
@@ -43,16 +43,29 @@
                 </table>
             </div>
 
-            <form action="#" th:action="@{/patient/addNote/{id}(id=${patient.id})}" th:object="${patientNote}" method="post" class="form-horizontal" style="width: 100%">
-            <div class="form-group">
-                <label for="addNote">Write a note</label>
-                <textarea class="form-control border border-dark rounded" id="addNote" name="addNote" rows="5"></textarea>
-            </div>
+            <form action="#" th:action="@{/patient/addNote/{patId}(patId=${patientNote.patId})}" th:object="${patientNote}"
+                  method="post" class="form-horizontal" style="width: 100%">
+                <div class="form-group">
+                    <label for="note">Write a note</label>
+                    <textarea class="form-control border border-dark rounded" th:field="*{note}" id="note" name="note"
+                              rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" th:value="${patientNote.patId}" th:field="*{patId}" name="patId" id="patId" placeholder="patId"
+                           class="col-4"/>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" th:value="${patientNote.patient}" th:field="*{patient}" name="patient" id="patient"
+                           placeholder="patient"
+                           class="col-4"/>
+                </div>
 
-            <div class="col-sm-12">
-                <input class="btn btn-primary btn-sm" type="submit" value="Add Note" />
-                <a class="btn btn-danger btn-sm" href="/patient/list">Back to List</a>
-            </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <input class="btn btn-primary btn-sm" type="submit" value="Add Note"/>
+                        <a class="btn btn-danger btn-sm" href="/patient/list">Back to List</a>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

@@ -17,7 +17,9 @@ public class PatientController {
 
     private final MicroserviceBackProxy backProxy;
 
-    public PatientController(MicroserviceBackProxy backProxy) {this.backProxy = backProxy;}
+    public PatientController(MicroserviceBackProxy backProxy) {
+        this.backProxy = backProxy;
+    }
 
     @GetMapping("/list")
     public String showPatientsList(Model model) {
@@ -28,12 +30,14 @@ public class PatientController {
 
     @GetMapping("/information/{id}")
     public String showPatientInformation(@PathVariable("id") Integer id, Model model) {
-        PatientBean patient = backProxy.showOnePatientInformations(id);
+        PatientBean patientInfo = backProxy.showOnePatientInformations(id);
         List<PatientNotesBean> patientNotes = backProxy.showPatientNotes(id);
         PatientNotesBean patientNote = new PatientNotesBean();
-        model.addAttribute("patientNote", patientNote);
-        model.addAttribute("patient", patient);
+        patientNote.setPatId(patientInfo.getId());
+        patientNote.setPatient(patientInfo.getFirstName());
+        model.addAttribute("patientInfo", patientInfo);
         model.addAttribute("patientNotes", patientNotes);
+        model.addAttribute("patientNote", patientNote);
         return "patient/information";
     }
 
@@ -45,7 +49,7 @@ public class PatientController {
 
     @PostMapping("/add/validate")
     public String addPatientValidation(@Valid @ModelAttribute("patient") PatientBean patient, BindingResult result) {
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "patient/add";
         }
         backProxy.addPatientValidate(patient);
@@ -61,23 +65,18 @@ public class PatientController {
 
     @PostMapping("/update/{id}")
     public String updatePatientValidation(@PathVariable Integer id, @Valid PatientBean patient, BindingResult result) {
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "patient/update";
         }
         backProxy.updatePatientValidate(id, patient);
         return "redirect:/patient/list";
     }
 
-    @PostMapping("/addNote/{id}")
-    public String addNoteForPatient(@PathVariable Integer id, PatientBean patient, String note) {
-        PatientNotesBean patientNote = new PatientNotesBean();
-        System.out.println(patient.getId());
-        System.out.println(id);
-        patientNote.setPatient(patient.getFirstName());
-        patientNote.setPatId(patient.getId());
-        patientNote.setNote(note);
+    @PostMapping("/addNote/{patId}")
+    public String addNoteForPatient(@PathVariable Integer patId, PatientNotesBean patientNote) {
+        System.out.println(patientNote.getPatient() + " patient " + patientNote.getPatId() + " id " );
         backProxy.addNoteForPatient(patientNote);
-        return "redirect:/patient/list";
+        return "redirect:/patient/information/{patId}";
     }
 
 }
