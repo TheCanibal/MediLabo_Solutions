@@ -28,8 +28,8 @@
 
             <p class="fw-bold">Phone Number : <span th:text="${patient.phoneNumber}" class="fw-normal"></span></p>
 
-            <div class="col-md-12 mx-auto mt-5 text-center">
-                <table class="table table-bordered overflow-auto">
+            <div class="col-md-12 mx-auto mt-5 text-center h-auto overflow-auto">
+                <table class="table table-bordered">
                     <thead>
                     <tr>
                         <th>Notes</th>
@@ -43,9 +43,17 @@
                 </table>
             </div>
 
+            <form action="#" th:action="@{/patient/addNote/{id}(id=${patient.id})}" th:object="${patientNote}" method="post" class="form-horizontal" style="width: 100%">
+            <div class="form-group">
+                <label for="addNote">Write a note</label>
+                <textarea class="form-control border border-dark rounded" id="addNote" name="addNote" rows="5"></textarea>
+            </div>
+
             <div class="col-sm-12">
+                <input class="btn btn-primary btn-sm" type="submit" value="Add Note" />
                 <a class="btn btn-danger btn-sm" href="/patient/list">Back to List</a>
             </div>
+            </form>
         </div>
     </div>
 </div>

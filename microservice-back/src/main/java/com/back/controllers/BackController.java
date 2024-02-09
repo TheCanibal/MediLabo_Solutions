@@ -39,4 +39,9 @@ public class BackController {
 
     @PostMapping("/back/update/{id}")
     public Patient updatePatientValidate(@PathVariable Integer id, @RequestBody Patient patient) { return patientService.updatePatient(patient);}
+
+    @PostMapping("/back/addNote")
+    public PatientNotes addNoteForPatient(@RequestBody PatientNotes patientNote) {
+        return patientService.addPatientNote(patientNote);
+    }
 }

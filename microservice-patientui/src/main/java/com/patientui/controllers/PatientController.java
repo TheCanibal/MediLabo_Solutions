@@ -30,6 +30,8 @@ public class PatientController {
     public String showPatientInformation(@PathVariable("id") Integer id, Model model) {
         PatientBean patient = backProxy.showOnePatientInformations(id);
         List<PatientNotesBean> patientNotes = backProxy.showPatientNotes(id);
+        PatientNotesBean patientNote = new PatientNotesBean();
+        model.addAttribute("patientNote", patientNote);
         model.addAttribute("patient", patient);
         model.addAttribute("patientNotes", patientNotes);
         return "patient/information";
@@ -63,6 +65,18 @@ public class PatientController {
             return "patient/update";
         }
         backProxy.updatePatientValidate(id, patient);
+        return "redirect:/patient/list";
+    }
+
+    @PostMapping("/addNote/{id}")
+    public String addNoteForPatient(@PathVariable Integer id, PatientBean patient, String note) {
+        PatientNotesBean patientNote = new PatientNotesBean();
+        System.out.println(patient.getId());
+        System.out.println(id);
+        patientNote.setPatient(patient.getFirstName());
+        patientNote.setPatId(patient.getId());
+        patientNote.setNote(note);
+        backProxy.addNoteForPatient(patientNote);
         return "redirect:/patient/list";
     }
 

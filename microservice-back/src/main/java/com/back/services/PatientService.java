@@ -37,4 +37,8 @@ public class PatientService {
     public List<PatientNotes> getPatientNotesByPatId(Integer patId) {
         return patientRepositoryMongoDB.findByPatId(patId);
     }
+
+    public PatientNotes addPatientNote(PatientNotes patientNote) {
+        return patientRepositoryMongoDB.insert(patientNote);
+    }
 }
