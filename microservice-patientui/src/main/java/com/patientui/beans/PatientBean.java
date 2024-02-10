@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class PatientBean {
 
@@ -20,9 +21,8 @@ public class PatientBean {
     @Size(min = 2, message = "2 characters min.")
     @Size(max = 50, message = "50 characters max.")
     private String lastName;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Birthdate is mandatory")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
     @NotBlank(message = "Gender is mandatory")
     private String gender;

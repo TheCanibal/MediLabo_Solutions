@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Patient {
@@ -23,9 +25,8 @@ public class Patient {
     @Size(min = 2, message = "2 characters min.")
     @Size(max = 50, message = "50 characters max.")
     private String lastName;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty(message = "Birthdate is mandatory")
+    @NotNull(message = "Birthdate is mandatory")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
     @NotBlank(message = "Gender is mandatory")
     private String gender;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class PatientService {
 
@@ -18,27 +19,59 @@ public class PatientService {
     @Autowired
     private PatientRepositoryMongoDB patientRepositoryMongoDB;
 
+    /**
+     * get all patients in database
+     *
+     * @return all patient from database
+     */
     public List<Patient> getAllPatients() {
         return patientRepositoryJPA.findAll();
     }
 
+    /**
+     * get one patient with his ID
+     *
+     * @param id patient's id
+     * @return patient with id
+     */
     public Optional<Patient> getPatientById(Integer id) {
         return patientRepositoryJPA.findById(id);
     }
 
-    public Patient addPatient(Patient patient) {
-        return patientRepositoryJPA.save(patient);
+    /**
+     * Add a patient to database
+     *
+     * @param patient patient to add
+     */
+    public void addPatient(Patient patient) {
+        patientRepositoryJPA.save(patient);
     }
 
-    public Patient updatePatient(Patient patient) {
-        return patientRepositoryJPA.save(patient);
+    /**
+     * update a patient in database
+     *
+     * @param patient patient to update
+     */
+    public void updatePatient(Patient patient) {
+        patientRepositoryJPA.save(patient);
     }
 
+    /**
+     * get all notes of a patient
+     *
+     * @param patId id of the patient to get notes
+     * @return all the notes of a patient
+     */
     public List<PatientNotes> getPatientNotesByPatId(Integer patId) {
         return patientRepositoryMongoDB.findByPatId(patId);
     }
 
-    public PatientNotes addPatientNote(PatientNotes patientNote) {
-        return patientRepositoryMongoDB.insert(patientNote);
+    /**
+     * add a note for a patient
+     *
+     * @param patientNote note to add
+     */
+    public void addPatientNote(PatientNotes patientNote) {
+        patientRepositoryMongoDB.insert(patientNote);
     }
 }
