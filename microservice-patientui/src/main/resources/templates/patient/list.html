@@ -8,6 +8,10 @@
 </head>
 <body>
 <div class="container">
+    <form name="logoutForm" th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
     <div class="row"><h2>Patients</h2></div>
     <div class="row">
         <a href="/patient/add" class="btn btn-primary btn-sm">Add New</a>
