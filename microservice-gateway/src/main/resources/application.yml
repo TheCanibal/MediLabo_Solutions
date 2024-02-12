@@ -2,15 +2,15 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: patientui_route
-          uri: http://localhost:9001/
-          predicates:
-            - Path=/patient/**
-        - id: back_route
-          uri: http://localhost:9002/
+        - id: microservice-patientui
+          uri: http://localhost:9001
           predicates:
             - Path=/**
-        - id: mongodb_route
-          uri: http://localhost:9004/
+        - id: microservice-mongodb
+          uri: http://localhost:9004
+          predicates:
+            - Path=/**
+        - id: microservice-back
+          uri: localhost:9002
           predicates:
             - Path=/**

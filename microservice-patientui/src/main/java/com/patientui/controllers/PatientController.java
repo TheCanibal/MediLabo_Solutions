@@ -5,6 +5,7 @@ import com.patientui.beans.PatientNotesBean;
 import com.patientui.proxies.MicroserviceBackProxy;
 import com.patientui.proxies.MicroserviceMongoDBProxy;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +17,12 @@ import java.util.List;
 @RequestMapping("/patient")
 public class PatientController {
 
-    private final MicroserviceBackProxy backProxy;
+    @Autowired
+    private MicroserviceBackProxy backProxy;
 
-    private final MicroserviceMongoDBProxy mongoDBProxy;
+    @Autowired
+    private MicroserviceMongoDBProxy mongoDBProxy;
 
-    public PatientController(MicroserviceBackProxy backProxy, MicroserviceMongoDBProxy mongoDBProxy) {
-        this.backProxy = backProxy;
-        this.mongoDBProxy = mongoDBProxy;
-    }
 
     /**
      * show the patient list in a html page
