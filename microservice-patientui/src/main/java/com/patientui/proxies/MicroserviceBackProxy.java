@@ -16,14 +16,8 @@ public interface MicroserviceBackProxy {
     @GetMapping("/back/{id}")
     PatientBean showOnePatientInformations(@PathVariable Integer id);
 
-    @GetMapping("/back/{patId}/notes")
-    List<PatientNotesBean> showPatientNotes(@PathVariable Integer patId);
-
     @PostMapping("/back/add/validate")
     PatientBean addPatientValidate(@RequestBody PatientBean patient);
-
-    @PostMapping("/back/addNote")
-    PatientBean addNoteForPatient(@RequestBody PatientNotesBean patientNote);
 
     @PostMapping("/back/update/{id}")
     PatientBean updatePatientValidate(@PathVariable Integer id, @RequestBody PatientBean patient);

@@ -3,6 +3,7 @@ package com.patientui.controllers;
 import com.patientui.beans.PatientBean;
 import com.patientui.beans.PatientNotesBean;
 import com.patientui.proxies.MicroserviceBackProxy;
+import com.patientui.proxies.MicroserviceMongoDBProxy;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,11 @@ public class PatientController {
 
     private final MicroserviceBackProxy backProxy;
 
-    public PatientController(MicroserviceBackProxy backProxy) {
+    private final MicroserviceMongoDBProxy mongoDBProxy;
+
+    public PatientController(MicroserviceBackProxy backProxy, MicroserviceMongoDBProxy mongoDBProxy) {
         this.backProxy = backProxy;
+        this.mongoDBProxy = mongoDBProxy;
     }
 
     /**
@@ -44,7 +48,7 @@ public class PatientController {
     @GetMapping("/information/{id}")
     public String showPatientInformation(@PathVariable("id") Integer id, Model model) {
         PatientBean patientInfo = backProxy.showOnePatientInformations(id);
-        List<PatientNotesBean> patientNotes = backProxy.showPatientNotes(id);
+        List<PatientNotesBean> patientNotes = mongoDBProxy.showPatientNotes(id);
         PatientNotesBean patientNote = new PatientNotesBean();
         patientNote.setPatId(patientInfo.getId());
         patientNote.setPatient(patientInfo.getFirstName());
@@ -123,7 +127,7 @@ public class PatientController {
     @PostMapping("/addNote")
     public String addNoteForPatient(PatientNotesBean patientNote) {
         System.out.println(patientNote.getPatient() + " patient " + patientNote.getPatId() + " id ");
-        backProxy.addNoteForPatient(patientNote);
+        mongoDBProxy.addNoteForPatient(patientNote);
         return "redirect:http://localhost:9003/patient/information/" + patientNote.getPatId();
     }
 

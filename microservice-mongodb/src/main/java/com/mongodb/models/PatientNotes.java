@@ -1,8 +1,8 @@
-package com.back.models;
+package com.mongodb.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection = "patient_notes")
 public class PatientNotes {

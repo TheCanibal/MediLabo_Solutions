@@ -10,3 +10,7 @@ spring:
           uri: http://localhost:9002/
           predicates:
             - Path=/**
+        - id: mongodb_route
+          uri: http://localhost:9004/
+          predicates:
+            - Path=/**

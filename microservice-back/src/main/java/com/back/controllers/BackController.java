@@ -1,8 +1,8 @@
 package com.back.controllers;
 
 import com.back.models.Patient;
-import com.back.models.PatientNotes;
 import com.back.services.PatientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,11 +11,8 @@ import java.util.Optional;
 @RestController
 public class BackController {
 
-    private final PatientService patientService;
-
-    public BackController(PatientService patientService) {
-        this.patientService = patientService;
-    }
+    @Autowired
+    private PatientService patientService;
 
     /**
      * Get all patients in database
@@ -39,17 +36,6 @@ public class BackController {
     }
 
     /**
-     * get all the patient's notes with his ID
-     *
-     * @param patId patient's ID
-     * @return all the notes of the patient
-     */
-    @GetMapping("/back/{patId}/notes")
-    public List<PatientNotes> showPatientNotes(@PathVariable Integer patId) {
-        return patientService.getPatientNotesByPatId(patId);
-    }
-
-    /**
      * Add a patient to database
      *
      * @param patient patient to add in database
@@ -68,15 +54,5 @@ public class BackController {
     @PostMapping("/back/update/{id}")
     public void updatePatientValidate(@PathVariable Integer id, @RequestBody Patient patient) {
         patientService.updatePatient(patient);
-    }
-
-    /**
-     * Add a note to a patient in database
-     *
-     * @param patientNote note to add
-     */
-    @PostMapping("/back/addNote")
-    public void addNoteForPatient(@RequestBody PatientNotes patientNote) {
-        patientService.addPatientNote(patientNote);
     }
 }
