@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/microservice-interface/pom.xml" />
         <option value="$PROJECT_DIR$/microservice-patientui/pom.xml" />
         <option value="$PROJECT_DIR$/microservice-mongodb/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-riskevaluator/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -4,6 +4,7 @@ import com.patientui.beans.PatientBean;
 import com.patientui.beans.PatientNotesBean;
 import com.patientui.proxies.MicroserviceBackProxy;
 import com.patientui.proxies.MicroserviceMongoDBProxy;
+import com.patientui.proxies.MicroserviceRiskEvaluator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class PatientController {
 
     @Autowired
     private MicroserviceMongoDBProxy mongoDBProxy;
+
+    @Autowired
+    private MicroserviceRiskEvaluator riskEvaluator;
 
 
     /**
@@ -51,6 +55,7 @@ public class PatientController {
         PatientNotesBean patientNote = new PatientNotesBean();
         patientNote.setPatId(patientInfo.getId());
         patientNote.setPatient(patientInfo.getFirstName());
+        riskEvaluator.risks(id);
         model.addAttribute("patientInfo", patientInfo);
         model.addAttribute("patientNotes", patientNotes);
         model.addAttribute("patientNote", patientNote);

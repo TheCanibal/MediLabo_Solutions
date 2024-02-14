@@ -14,3 +14,7 @@ spring:
           uri: localhost:9002
           predicates:
             - Path=/**
+        - id: microservice-riskevaluator
+          uri: localhost:9005
+          predicates:
+            - Path=/**
