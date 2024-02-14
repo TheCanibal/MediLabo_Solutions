@@ -3,21 +3,46 @@ package com.gateway.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler;
+import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
+import java.net.URI;
 
-@EnableWebSecurity
+@EnableWebFluxSecurity
 @Configuration
 public class SpringSecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(auth -> {
-            auth.anyRequest().authenticated();
-        }).formLogin(Customizer.withDefaults())
-                .logout(Customizer.withDefaults()).build();
+    public ServerLogoutSuccessHandler logoutSuccessHandler() {
+        RedirectServerLogoutSuccessHandler handler = new RedirectServerLogoutSuccessHandler();
+        handler.setLogoutSuccessUrl(URI.create("/patient/list"));
+        return handler;
+    }
+
+    @Bean
+    public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
+        return http.authorizeExchange(exchanges -> {
+                    exchanges.pathMatchers("http://localhost:9003/**").authenticated();
+                    exchanges.anyExchange().authenticated();
+                })
+                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
+                .logout(logout -> {
+                    logout.logoutSuccessHandler(logoutSuccessHandler());
+                }).build();
+    }
+
+    @Bean
+    public MapReactiveUserDetailsService userDetailsService() {
+        UserDetails user = User.withUsername("user").password(passwordEncoder().encode("user")).build();
+
+        return new MapReactiveUserDetailsService(user);
     }
 
     @Bean
