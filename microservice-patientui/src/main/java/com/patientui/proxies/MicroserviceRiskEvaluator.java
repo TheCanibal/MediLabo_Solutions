@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface MicroserviceRiskEvaluator {
 
     @GetMapping("/risk/{patId}")
-    public String risks(@PathVariable Integer patId);
+    public String riskToHaveDiabete(@PathVariable Integer patId);
 }

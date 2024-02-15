@@ -53,12 +53,13 @@ public class PatientController {
         PatientBean patientInfo = backProxy.showOnePatientInformations(id);
         List<PatientNotesBean> patientNotes = mongoDBProxy.showPatientNotes(id);
         PatientNotesBean patientNote = new PatientNotesBean();
+        String riskToHaveDiabete = riskEvaluator.riskToHaveDiabete(id);
         patientNote.setPatId(patientInfo.getId());
         patientNote.setPatient(patientInfo.getFirstName());
-        riskEvaluator.risks(id);
         model.addAttribute("patientInfo", patientInfo);
         model.addAttribute("patientNotes", patientNotes);
         model.addAttribute("patientNote", patientNote);
+        model.addAttribute("risk", riskToHaveDiabete);
         return "patient/information";
     }
 

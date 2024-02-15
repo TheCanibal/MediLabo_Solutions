@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
+
 import java.net.URI;
 
 @EnableWebFluxSecurity
@@ -35,7 +36,7 @@ public class SpringSecurityConfig {
                 .formLogin(Customizer.withDefaults())
                 .logout(logout -> {
                     logout.logoutSuccessHandler(logoutSuccessHandler());
-                }).build();
+                }).csrf(ServerHttpSecurity.CsrfSpec::disable).build();
     }
 
     @Bean
