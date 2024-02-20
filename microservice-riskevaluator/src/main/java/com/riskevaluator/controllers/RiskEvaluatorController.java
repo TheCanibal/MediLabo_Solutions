@@ -24,9 +24,6 @@ public class RiskEvaluatorController {
 
     @GetMapping("/risk/{patId}")
     public String riskToHaveDiabete(@PathVariable Integer patId) {
-        System.out.println(riskEvaluatorUtil.getAge(patId)+" ans");
-        System.out.println(riskEvaluatorUtil.getGender(patId));
-        System.out.println(riskEvaluatorUtil.getNumberOfTriggerTermsByPatId(patId));
         return riskEvaluatorUtil.getRiskToHaveDiabete(patId);
     }
 }

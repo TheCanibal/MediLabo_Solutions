@@ -33,8 +33,7 @@ public class Patient {
     private String address;
     private String phoneNumber;
 
-    public Patient(Integer id, String firstName, String lastName, LocalDate birthdate, String gender, String address, String phoneNumber) {
-        this.id = id;
+    public Patient(String firstName, String lastName, LocalDate birthdate, String gender, String address, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;

@@ -28,10 +28,25 @@
 
             <p class="fw-bold">Phone Number : <span th:text="${patientInfo.phoneNumber}" class="fw-normal"></span></p>
 
-            <p class="fw-bold">Risks : <span th:text="${risk}" class="fw-normal"></span></p>
+            <div class="col-md-6 mx-auto mt-5 text-center">
+                <table class="table table-bordered border-black">
+                    <thead>
+                    <tr>
+                        <th>PatId</th>
+                        <th>Risque attendu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${patientNote.patId}"></td>
+                        <td th:text="${risk}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="col-md-12 mx-auto mt-5 text-center h-25 overflow-auto">
-                <table class="table table-bordered">
+                <table class="table table-bordered border-black">
                     <thead>
                     <tr>
                         <th>Notes</th>
