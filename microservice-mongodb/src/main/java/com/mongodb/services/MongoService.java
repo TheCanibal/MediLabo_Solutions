@@ -1,5 +1,6 @@
 package com.mongodb.services;
 
+import com.mongodb.exceptions.NotesNotFoundException;
 import com.mongodb.models.PatientNotes;
 import com.mongodb.repositories.MongoDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,12 @@ public class MongoService {
      * @return all the notes of a patient
      */
     public List<PatientNotes> getPatientNotesByPatId(Integer patId) {
-        return patientRepositoryMongoDB.findByPatId(patId);
+        List<PatientNotes> listNotes = patientRepositoryMongoDB.findByPatId(patId);
+        if (listNotes.isEmpty()) {
+            throw new NotesNotFoundException("Notes not found");
+        } else {
+            return patientRepositoryMongoDB.findByPatId(patId);
+        }
     }
 
     /**
