@@ -5,6 +5,7 @@ import com.patientui.beans.PatientNotesBean;
 import com.patientui.proxies.MicroserviceBackProxy;
 import com.patientui.proxies.MicroserviceMongoDBProxy;
 import com.patientui.proxies.MicroserviceRiskEvaluator;
+import com.patientui.services.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +20,7 @@ import java.util.List;
 public class PatientController {
 
     @Autowired
-    private MicroserviceBackProxy backProxy;
-
-    @Autowired
-    private MicroserviceMongoDBProxy mongoDBProxy;
-
-    @Autowired
-    private MicroserviceRiskEvaluator riskEvaluator;
+    private PatientService patientService;
 
 
     /**
@@ -36,7 +31,7 @@ public class PatientController {
      */
     @GetMapping("/list")
     public String showPatientsList(Model model) {
-        List<PatientBean> patients = backProxy.showAllPatients();
+        List<PatientBean> patients = patientService.showAllPatients();
         model.addAttribute("patients", patients);
         return "patient/list";
     }
@@ -50,10 +45,10 @@ public class PatientController {
      */
     @GetMapping("/information/{id}")
     public String showPatientInformation(@PathVariable("id") Integer id, Model model) {
-        PatientBean patientInfo = backProxy.showOnePatientInformations(id);
-        List<PatientNotesBean> patientNotes = mongoDBProxy.showPatientNotes(id);
+        PatientBean patientInfo = patientService.showOnePatientInformations(id).get();
+        List<PatientNotesBean> patientNotes = patientService.showPatientNotes(id);
         PatientNotesBean patientNote = new PatientNotesBean();
-        String riskToHaveDiabete = riskEvaluator.riskToHaveDiabete(id);
+        String riskToHaveDiabete = patientService.riskToHaveDiabete(id);
         patientNote.setPatId(patientInfo.getId());
         patientNote.setPatient(patientInfo.getFirstName());
         model.addAttribute("patientInfo", patientInfo);
@@ -88,7 +83,7 @@ public class PatientController {
         if (result.hasErrors()) {
             return "patient/add";
         }
-        backProxy.addPatientValidate(patient);
+        patientService.addPatientValidate(patient);
         return "redirect:http://localhost:9003/patient/list";
     }
 
@@ -101,7 +96,7 @@ public class PatientController {
      */
     @GetMapping("/update/{id}")
     public String showUpdatePatientPage(@PathVariable Integer id, Model model) {
-        PatientBean patient = backProxy.showOnePatientInformations(id);
+        PatientBean patient = patientService.showOnePatientInformations(id).get();
         model.addAttribute("patient", patient);
         return "patient/update";
     }
@@ -119,7 +114,7 @@ public class PatientController {
         if (result.hasErrors()) {
             return "patient/update";
         }
-        backProxy.updatePatientValidate(id, patient);
+        patientService.updatePatientValidate(id, patient);
         return "redirect:http://localhost:9003/patient/list";
     }
 
@@ -132,7 +127,7 @@ public class PatientController {
     @PostMapping("/addNote")
     public String addNoteForPatient(PatientNotesBean patientNote) {
         System.out.println(patientNote.getPatient() + " patient " + patientNote.getPatId() + " id ");
-        mongoDBProxy.addNoteForPatient(patientNote);
+        patientService.addNoteForPatient(patientNote);
         return "redirect:http://localhost:9003/patient/information/" + patientNote.getPatId();
     }
 

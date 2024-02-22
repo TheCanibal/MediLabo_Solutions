@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @FeignClient(name = "microservice-back", url = "localhost:9002")
 public interface MicroserviceBackProxy {
@@ -14,11 +15,11 @@ public interface MicroserviceBackProxy {
     List<PatientBean> showAllPatients();
 
     @GetMapping("/back/{id}")
-    PatientBean showOnePatientInformations(@PathVariable Integer id);
+    Optional<PatientBean> showOnePatientInformations(@PathVariable Integer id);
 
     @PostMapping("/back/add/validate")
-    PatientBean addPatientValidate(@RequestBody PatientBean patient);
+    void addPatientValidate(@RequestBody PatientBean patient);
 
     @PostMapping("/back/update/{id}")
-    PatientBean updatePatientValidate(@PathVariable Integer id, @RequestBody PatientBean patient);
+    void updatePatientValidate(@PathVariable Integer id, @RequestBody PatientBean patient);
 }

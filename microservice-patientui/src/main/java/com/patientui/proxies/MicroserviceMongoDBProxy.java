@@ -14,7 +14,7 @@ import java.util.List;
 public interface MicroserviceMongoDBProxy {
 
     @PostMapping("/back/addNote")
-    PatientBean addNoteForPatient(@RequestBody PatientNotesBean patientNote);
+    void addNoteForPatient(@RequestBody PatientNotesBean patientNote);
 
     @GetMapping("/back/{patId}/notes")
     List<PatientNotesBean> showPatientNotes(@PathVariable Integer patId);
