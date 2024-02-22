@@ -79,17 +79,13 @@ public class RiskEvaluatorUtil {
             return "None";
         } else if (numberOfTriggerTerms >= 2 && numberOfTriggerTerms <= 5 && patientAge > 30) {
             return "Borderline";
-        } else if (patientGender.equals("M") && patientAge <= 30 && numberOfTriggerTerms >= 5) {
+        } else if ((patientGender.equals("M") && patientAge <= 30 && numberOfTriggerTerms >= 5)
+                || (patientGender.equals("F") && patientAge <= 30 && numberOfTriggerTerms >= 7)
+                || (patientAge > 30 && numberOfTriggerTerms >= 8)) {
             return "Early onset";
-        } else if (patientGender.equals("F") && patientAge <= 30 && numberOfTriggerTerms >= 7) {
-            return "Early onset";
-        } else if (patientAge > 30 && numberOfTriggerTerms >= 8) {
-            return "Early onset";
-        } else if (patientGender.equals("M") && patientAge <= 30 && numberOfTriggerTerms >= 3) {
-            return "In Danger";
-        } else if (patientGender.equals("F") && patientAge <= 30 && numberOfTriggerTerms >= 5) {
-            return "In Danger";
-        } else if (patientAge > 30 && numberOfTriggerTerms >= 6) {
+        } else if ((patientGender.equals("M") && patientAge <= 30 && numberOfTriggerTerms >= 3)
+                || (patientGender.equals("F") && patientAge <= 30 && numberOfTriggerTerms >= 5)
+                || (patientAge > 30 && numberOfTriggerTerms >= 6)) {
             return "In Danger";
         } else {
             return "None";

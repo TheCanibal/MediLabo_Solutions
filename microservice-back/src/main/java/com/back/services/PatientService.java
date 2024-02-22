@@ -1,5 +1,6 @@
 package com.back.services;
 
+import com.back.exceptions.PatientNotFoundException;
 import com.back.models.Patient;
 import com.back.repositories.PatientRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,12 @@ public class PatientService {
      * @return patient with id
      */
     public Optional<Patient> getPatientById(Integer id) {
-        return patientRepositoryJPA.findById(id);
+        Optional<Patient> patient = patientRepositoryJPA.findById(id);
+        if (patient.isPresent()) {
+            return patientRepositoryJPA.findById(id);
+        } else {
+            throw new PatientNotFoundException("No patient with this id");
+        }
     }
 
     /**

@@ -9,14 +9,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -69,6 +70,12 @@ class BackApplicationTests {
 	}
 
 	@Test
+	public void shouldReturnNotFoundPatientException() throws Exception {
+
+		mockMvc.perform(get("/back/{id}", 6)).andExpect(status().isNotFound());
+	}
+
+	@Test
 	public void addPatientToDatabase() throws Exception {
 		Patient patient = new Patient("First Name", "Last Name", LocalDate.of(2000, 2, 2), "F", "testaddress", "phone");
 		int listPatientsSize = patientService.getAllPatients().size();
@@ -83,20 +90,19 @@ class BackApplicationTests {
 
 	@Test
 	public void updatePatientInDatabase() throws Exception {
-		Patient patient = new Patient("First Name", "Last Name", LocalDate.of(2000, 2, 2), "F", "testaddress", "phone");
+
+		Patient patient = patientService.getPatientById(1).get();
+		assertEquals(patient.getFirstName(), "TestNone");
+		patient.setFirstName("First Name Modify");
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.findAndRegisterModules();
 
-		patientService.addPatient(patient);
-		assertNotNull(patient.getId());
-		assertEquals(patient.getFirstName(), "First Name");
-
-		Integer id = patient.getId();
-
-		mockMvc.perform(post("/back/update/{id}", id).flashAttr("patient", patient).param("firstName", "First Name Modify").content(mapper.writeValueAsString(patient)).contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(post("/back/update/{id}", 1).content(mapper.writeValueAsString(patient)).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
+		patient = patientService.getPatientById(1).get();
 		assertEquals(patient.getFirstName(), "First Name Modify");
+
 
 	}
 
