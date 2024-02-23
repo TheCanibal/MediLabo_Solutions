@@ -22,6 +22,11 @@ public class RiskEvaluatorController {
     @Autowired
     private RiskEvaluatorUtil riskEvaluatorUtil;
 
+    /**
+     * Show the risk to have diabete
+     * @param patId patient's id
+     * @return risk to have diabete
+     */
     @GetMapping("/risk/{patId}")
     public String riskToHaveDiabete(@PathVariable Integer patId) {
         return riskEvaluatorUtil.getRiskToHaveDiabete(patId);

@@ -12,15 +12,11 @@ import java.util.List;
 @FeignClient(name = "microservice-back", url = "localhost:9002")
 public interface MicroserviceBackProxy {
 
-    @GetMapping("/back/list")
-    List<PatientBean> showAllPatients();
-
+    /**
+     * Recover patient with his id
+     * @param id patient's id
+     * @return patient if exists else throw NotFoundException
+     */
     @GetMapping("/back/{id}")
     PatientBean showOnePatientInformations(@PathVariable Integer id);
-
-    @PostMapping("/back/add/validate")
-    PatientBean addPatientValidate(@RequestBody PatientBean patient);
-
-    @PostMapping("/back/update/{id}")
-    PatientBean updatePatientValidate(@PathVariable Integer id, @RequestBody PatientBean patient);
 }

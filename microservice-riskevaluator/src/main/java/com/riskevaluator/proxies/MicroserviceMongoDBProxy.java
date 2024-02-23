@@ -13,9 +13,11 @@ import java.util.List;
 @FeignClient(name = "microservice-mongodb", url = "localhost:9004")
 public interface MicroserviceMongoDBProxy {
 
-    @PostMapping("/back/addNote")
-    PatientBean addNoteForPatient(@RequestBody PatientNotesBean patientNote);
-
+    /**
+     * Get all patient notes with his id
+     * @param patId patient's id
+     * @return all notes of patient
+     */
     @GetMapping("/back/{patId}/notes")
     List<PatientNotesBean> showPatientNotes(@PathVariable Integer patId);
 }

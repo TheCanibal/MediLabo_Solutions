@@ -73,7 +73,7 @@ class BackApplicationTests {
     @Test
     public void shouldReturnNotFoundPatientException() throws Exception {
 
-        mockMvc.perform(get("/back/{id}", 6)).andExpect(status().isNotFound());
+        mockMvc.perform(get("/back/{id}", 999999999)).andExpect(status().isNotFound());
     }
 
     @Test
