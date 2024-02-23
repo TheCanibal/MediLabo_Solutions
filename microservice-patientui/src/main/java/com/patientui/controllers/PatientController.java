@@ -110,7 +110,7 @@ public class PatientController {
      * @return update page if errors or redirection to the patient's list updated
      */
     @PostMapping("/update/{id}")
-    public String updatePatientValidation(@PathVariable Integer id, @Valid PatientBean patient, BindingResult result) {
+    public String updatePatientValidation(@PathVariable Integer id, @Valid @ModelAttribute("patient") PatientBean patient, BindingResult result) {
         if (result.hasErrors()) {
             return "patient/update";
         }
@@ -125,8 +125,7 @@ public class PatientController {
      * @return redirection to the information patient page
      */
     @PostMapping("/addNote")
-    public String addNoteForPatient(PatientNotesBean patientNote) {
-        System.out.println(patientNote.getPatient() + " patient " + patientNote.getPatId() + " id ");
+    public String addNoteForPatient(@ModelAttribute("patientNote") PatientNotesBean patientNote) {
         patientService.addNoteForPatient(patientNote);
         return "redirect:http://localhost:9003/patient/information/" + patientNote.getPatId();
     }

@@ -88,7 +88,7 @@ public class RiskEvaluatorUtil {
                 || (patientAge > 30 && numberOfTriggerTerms >= 6)) {
             return "In Danger";
         } else {
-            return "None";
+            return "No risks determinated";
         }
     }
 }

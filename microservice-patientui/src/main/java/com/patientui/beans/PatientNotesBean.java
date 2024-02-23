@@ -10,6 +10,12 @@ public class PatientNotesBean {
     public PatientNotesBean() {
     }
 
+    public PatientNotesBean(Integer patId, String patient, String note) {
+        this.patId = patId;
+        this.patient = patient;
+        this.note = note;
+    }
+
     public String getId() {
         return id;
     }
