@@ -26,6 +26,7 @@ public class PatientService {
 
     /**
      * Recover all patients from database
+     *
      * @return all patients from database
      */
     public List<PatientBean> showAllPatients() {
@@ -34,6 +35,7 @@ public class PatientService {
 
     /**
      * Recover patient with his id
+     *
      * @param id patient's id
      * @return patient if exists else throw NotFoundException
      */
@@ -48,6 +50,7 @@ public class PatientService {
 
     /**
      * Add patient in database
+     *
      * @param patient patient to add
      */
     public void addPatientValidate(PatientBean patient) {
@@ -56,7 +59,8 @@ public class PatientService {
 
     /**
      * Update patient in database
-     * @param id patient's id
+     *
+     * @param id      patient's id
      * @param patient patient to update
      */
     public void updatePatientValidate(Integer id, PatientBean patient) {
@@ -65,6 +69,7 @@ public class PatientService {
 
     /**
      * Add a note for a patient thanks to his id
+     *
      * @param patientNote note to add
      */
     public void addNoteForPatient(PatientNotesBean patientNote) {
@@ -73,12 +78,13 @@ public class PatientService {
 
     /**
      * Get all patient notes with his id
+     *
      * @param patId patient's id
      * @return all notes of patient
      */
     public List<PatientNotesBean> showPatientNotes(Integer patId) {
         List<PatientNotesBean> listNotes = mongoDBProxy.showPatientNotes(patId);
-        if(listNotes.isEmpty()) {
+        if (listNotes.isEmpty()) {
             throw new NotFoundException("Notes not found, wrong patient id");
         } else {
             return mongoDBProxy.showPatientNotes(patId);
@@ -87,6 +93,7 @@ public class PatientService {
 
     /**
      * Get the risk to have diabete
+     *
      * @param patId patient"s id
      * @return risk to have diabete
      */

@@ -11,13 +11,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
 class PatientuiApplicationTests {
 
@@ -41,14 +42,14 @@ class PatientuiApplicationTests {
 
         // Save
         patientService.addPatientValidate(patient);
-        PatientBean patientWithId = patientService.showOnePatientInformations(5).get();
-        assertNotNull(patientWithId.getId());
-        assertEquals(patientWithId.getFirstName(), "First Name", "First Name");
+        patient = patientService.showOnePatientInformations(patientService.showAllPatients().size()).get();
+        assertNotNull(patient.getId());
+        assertEquals(patient.getFirstName(), "First Name", "First Name");
 
         // Update
-        patientWithId.setFirstName("First Name Updated");
-        patientService.updatePatientValidate(5, patientWithId);
-        assertEquals(patientWithId.getFirstName(), "First Name Updated", "First Name Updated");
+        patient.setFirstName("First Name Updated");
+        patientService.updatePatientValidate(patient.getId(), patient);
+        assertEquals(patient.getFirstName(), "First Name Updated", "First Name Updated");
     }
 
     @Test
@@ -84,7 +85,7 @@ class PatientuiApplicationTests {
 
     @Test
     public void shouldReturnPatientInformationsNotFound() throws Exception {
-        mockMvc.perform(get("/patient/information/{id}", 10))
+        mockMvc.perform(get("/patient/information/{id}", 999999999))
                 .andExpect(status().isNotFound());
     }
 
@@ -104,7 +105,7 @@ class PatientuiApplicationTests {
 
     @Test
     public void shouldReturnPatientUpdateNotFound() throws Exception {
-        mockMvc.perform(get("/patient/update/{id}", 10))
+        mockMvc.perform(get("/patient/update/{id}", 999999999))
                 .andExpect(status().isNotFound());
     }
 
@@ -139,6 +140,7 @@ class PatientuiApplicationTests {
                 .andExpect(view().name("redirect:http://localhost:9003/patient/information/" + patientNote.getPatId()));
 
         assertEquals(patientService.showPatientNotes(1).size(), listPatientNotesSize + 1);
+
     }
 
     @Test

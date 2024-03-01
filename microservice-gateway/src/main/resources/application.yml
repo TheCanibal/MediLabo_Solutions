@@ -3,18 +3,18 @@ spring:
     gateway:
       routes:
         - id: microservice-patientui
-          uri: http://localhost:9001
+          uri: http://host.docker.internal:9001
           predicates:
             - Path=/**
         - id: microservice-mongodb
-          uri: http://localhost:9004
+          uri: http://host.docker.internal:9004
           predicates:
             - Path=/**
         - id: microservice-back
-          uri: localhost:9002
+          uri: http://host.docker.internal:9002
           predicates:
             - Path=/**
         - id: microservice-riskevaluator
-          uri: localhost:9005
+          uri: http://host.docker.internal:9005
           predicates:
             - Path=/**

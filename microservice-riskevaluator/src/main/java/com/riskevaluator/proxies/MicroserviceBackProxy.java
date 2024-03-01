@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "microservice-back", url = "localhost:9002")
+@FeignClient(name = "microservice-back", url = "host.docker.internal:9002")
 public interface MicroserviceBackProxy {
 
     /**

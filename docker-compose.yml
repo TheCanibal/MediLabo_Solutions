@@ -1,0 +1,41 @@
+version: "3"
+services:
+
+  mongodb:
+    image: microservice-mongodb
+    container_name: "mongodb"
+    ports:
+      - "9004:9004"
+    environment:
+      MONGODBPORT: 27017
+      MONGODBNAME: notes
+      MONGODBHOSTNAME: host.docker.internal
+
+  back:
+    image: microservice-back
+    container_name: "back"
+    ports:
+      - "9002:9002"
+
+  gateway:
+    image: microservice-gateway
+    container_name: "gateway"
+    ports:
+      - "9003:9003"
+    depends_on:
+      - back
+      - mongodb
+      - patientui
+      - riskevaluator
+
+  riskevaluator:
+    image: microservice-riskevaluator
+    container_name: "riskevaluator"
+    ports:
+      - "9005:9005"
+
+  patientui:
+    container_name: "patientui"
+    image: microservice-patientui
+    ports:
+      - "9001:9001"

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@FeignClient(name = "microservice-back", url = "localhost:9002")
+@FeignClient(name = "microservice-back", url = "host.docker.internal:9002")
 public interface MicroserviceBackProxy {
 
     /**

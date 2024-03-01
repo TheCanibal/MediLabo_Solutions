@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "microservice-mongodb", url = "localhost:9004")
+@FeignClient(name = "microservice-mongodb", url = "host.docker.internal:9004")
 public interface MicroserviceMongoDBProxy {
 
     /**

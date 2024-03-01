@@ -13,15 +13,12 @@
         <module name="gateway" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="interface" target="21" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="back" options="-parameters" />
       <module name="gateway" options="-parameters" />
-      <module name="interface" options="-parameters" />
       <module name="mongodb" options="-parameters" />
       <module name="patientui" options="-parameters" />
       <module name="riskevaluator" options="-parameters" />
