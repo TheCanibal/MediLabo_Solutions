@@ -6,10 +6,6 @@ services:
     container_name: "mongodb"
     ports:
       - "9004:9004"
-    environment:
-      MONGODBPORT: 27017
-      MONGODBNAME: notes
-      MONGODBHOSTNAME: host.docker.internal
 
   back:
     image: microservice-back
@@ -22,11 +18,6 @@ services:
     container_name: "gateway"
     ports:
       - "9003:9003"
-    depends_on:
-      - back
-      - mongodb
-      - patientui
-      - riskevaluator
 
   riskevaluator:
     image: microservice-riskevaluator
