@@ -1,15 +1,17 @@
 version: "3"
 services:
 
-  mongodb:
+  back_mongodb:
     image: microservice-mongodb
-    container_name: "mongodb"
+    container_name: "back_mongodb"
     ports:
       - "9004:9004"
+    environment:
+      MONGODB_URI: "mongodb://host.docker.internal:27017"
 
-  back:
+  back_h2:
     image: microservice-back
-    container_name: "back"
+    container_name: "back_h2"
     ports:
       - "9002:9002"
 
