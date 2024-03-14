@@ -29,7 +29,7 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
         return http.authorizeExchange(exchanges -> {
-                    exchanges.pathMatchers("http://localhost:9003/**").authenticated();
+                    exchanges.pathMatchers("http://host.docker.internal:9003/**").authenticated();
                     exchanges.anyExchange().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())

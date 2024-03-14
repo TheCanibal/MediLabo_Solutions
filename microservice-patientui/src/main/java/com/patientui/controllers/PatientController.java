@@ -84,6 +84,9 @@ public class PatientController {
             return "patient/add";
         }
         patientService.addPatientValidate(patient);
+        PatientBean patientWithId = patientService.showAllPatients().getLast();
+        PatientNotesBean patientFirstNote = new PatientNotesBean(patientWithId.getId(), patientWithId.getFirstName(), "You can write a note here!");
+        patientService.addNoteForPatient(patientFirstNote);
         return "redirect:http://localhost:9003/patient/list";
     }
 

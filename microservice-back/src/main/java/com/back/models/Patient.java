@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
+@Table(name="patient")
 public class Patient {
 
     @Id
